@@ -1,18 +1,17 @@
-"use client";
-
-import HomeSection from "@/modules/sections/home/home-sction";
+import HeroSection from "@/modules/sections/hero/hero-section";
 import BlogSection from "@/modules/sections/blog/blog-section";
-import AboutSection from "@/modules/sections/about/about-section";
 import PortfolioSection from "@/modules/sections/portfolio/portfolio-section";
 import ContactSection from "@/modules/sections/contact/contact-section";
+import { getAllBlogs } from "@/lib/blog";
 
-const Page = () => {
+const Page = async () => {
+  const blogs = await getAllBlogs();
+
   return (
     <main>
-      <HomeSection />
-      <BlogSection />
+      <HeroSection />
+      <BlogSection initialBlogs={blogs} />
       <PortfolioSection />
-      <AboutSection />
       <ContactSection />
     </main>
   );

@@ -1,10 +1,17 @@
+import { Metadata } from "next";
+import AboutSection from "@/modules/sections/about/about-section";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Learn more about my personal experience, skills and professional background",
+};
+
 const AboutPage = () => {
   return (
-    <section id="about" className="main flex flex-col px-4">
-      <h1 className="text-4xl font-bold px-4 md:px-0 text-center md:text-left">
-        About
-      </h1>
-    </section>
+    <main className="main px-4">
+      <AboutSection />
+    </main>
   );
 };
 

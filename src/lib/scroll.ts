@@ -1,3 +1,4 @@
+// 禁止滚动
 export const scrollLock = {
   enable: () => {
     document.documentElement.classList.add("overflow-hidden");

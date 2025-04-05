@@ -166,4 +166,8 @@
   .button-icon {
     @apply rounded-full border border-border bg-background backdrop-blur-sm text-muted-foreground hover:text-foreground cursor-pointer;
   }
+
+  .shiki-code {
+    @apply select-none;
+  }
 }
