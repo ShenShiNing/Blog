@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { MorphingText } from "@/components/ui/morphing-text";
 import { scrollToSection } from "@/lib/scroll";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // 通用动画变体
 const fadeInUp: Variants = {
@@ -50,6 +51,8 @@ const icons = [
 ];
 
 const HeroSection = () => {
+  const isMobile = useIsMobile();
+
   return (
     <section
       id="hero"
@@ -62,9 +65,9 @@ const HeroSection = () => {
           variants={fadeInUp}
           initial="initial"
           animate="animate"
-          className="w-full flex justify-center md:justify-end order-first md:order-last"
+          className={`w-full flex ${isMobile ? "justify-center" : "justify-end"} ${isMobile ? "order-first" : "order-last"}`}
         >
-          <Link href="#about" className="relative group">
+          <Link href="/about" className="relative group">
             <div className="absolute w-[calc(100%+20px)] h-[calc(100%+20px)] rounded-full bg-blue-500 blur-3xl -top-2.5 -left-2.5 transition-all group-hover:blur-2xl" />
             <Avatar className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-72 lg:h-72 transition-transform duration-300 group-hover:scale-105">
               <AvatarImage src="/images/Avatar.jpg" />
@@ -74,7 +77,9 @@ const HeroSection = () => {
         </motion.div>
 
         {/* 文本和按钮部分 - 移动端居中，桌面端左对齐 */}
-        <motion.div className="w-11/12 md:w-full  flex-col items-center md:items-start text-center md:text-left order-last md:order-first">
+        <motion.div
+          className={`w-11/12 md:w-full flex-col ${isMobile ? "items-center" : "items-start"} ${isMobile ? "text-center" : "text-left"} ${isMobile ? "order-last" : "order-first"}`}
+        >
           <motion.h1
             custom={0.2}
             variants={fadeInUp}
@@ -94,7 +99,7 @@ const HeroSection = () => {
           >
             <MorphingText
               texts={texts}
-              className="text-base sm:text-lg text-center md:text-left text-blue-500"
+              className={`text-base sm:text-lg ${isMobile ? "text-center" : "text-left"} text-blue-500`}
             />
           </motion.div>
 
@@ -114,10 +119,10 @@ const HeroSection = () => {
             variants={fadeInUp}
             initial="initial"
             animate="animate"
-            className="flex flex-wrap gap-4 justify-center md:justify-start mb-6"
+            className={`flex flex-wrap gap-4 ${isMobile ? "justify-center" : "justify-start"} mb-6`}
           >
-            <Link href="/about">
-              <Button className="w-full sm:w-auto cursor-pointer ">
+            <Link href="/about" className="w-full sm:w-auto">
+              <Button className="w-full sm:w-auto cursor-pointer">
                 About me
               </Button>
             </Link>
@@ -135,7 +140,7 @@ const HeroSection = () => {
             variants={fadeInUp}
             initial="initial"
             animate="animate"
-            className="flex gap-4 justify-center md:justify-start"
+            className={`flex gap-4 ${isMobile ? "justify-center" : "justify-start"}`}
           >
             {icons.map((icon, index) => (
               <SocialIcon key={index} href={icon.href} icon={icon.icon} />

@@ -3,9 +3,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Footer = () => {
   const [year, setYear] = useState("");
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     setYear(new Date().getFullYear().toString());
@@ -54,10 +56,8 @@ const Footer = () => {
               ) : (
                 <span>{link.label}</span>
               )}
-              {index < footerLinks.length - 1 && (
-                <span className="hidden md:inline text-muted-foreground/50">
-                  |
-                </span>
+              {index < footerLinks.length - 1 && !isMobile && (
+                <span className="text-muted-foreground/50">|</span>
               )}
             </div>
           ))}
