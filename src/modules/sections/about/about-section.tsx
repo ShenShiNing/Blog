@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { motion, Variants } from "motion/react";
 import { DownloadIcon, Github, Mail, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -67,12 +67,6 @@ export default function AboutSection() {
   const containerRef = useRef(null);
   const isMobile = useIsMobile();
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 1], [1, 0.8, 0.6]);
-
   return (
     <div
       ref={containerRef}
@@ -86,7 +80,6 @@ export default function AboutSection() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            style={{ opacity }}
             className="relative flex justify-center md:justify-end order-first md:order-last"
           >
             <div
@@ -100,9 +93,7 @@ export default function AboutSection() {
                   fill
                   className="object-cover"
                   priority
-                  sizes={
-                    isMobile ? "224px" : "(max-width: 1024px) 256px, 288px"
-                  }
+                  sizes=" 200px"
                 />
               </div>
               <div className="absolute -bottom-2 -right-2 bg-background rounded-full p-1.5">
