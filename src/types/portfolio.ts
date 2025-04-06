@@ -1,5 +1,8 @@
+import { ReactNode } from "react";
+
 export interface Portfolio {
   id: string;
+  slug: string;
   title: string;
   shortDescription: string;
   description: string;
@@ -10,4 +13,5 @@ export interface Portfolio {
   liveUrl?: string;
   githubUrl?: string;
   date: string;
+  content?: ReactNode; // 编译后的MDX内容
 }

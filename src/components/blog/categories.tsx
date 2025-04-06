@@ -19,6 +19,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { Badge } from "@/components/ui/badge";
 
 const categories: Category[] = [
   {
@@ -105,99 +106,119 @@ const Categories = () => {
   }, [updateIndicatorPosition, isMobile]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="space-y-4">
       {/* 移动端布局 */}
-      {isMobile && (
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex-1">
-            <SearchInput />
-          </div>
-          <Drawer open={isOpen} onOpenChange={setIsOpen}>
-            <DrawerTrigger asChild>
-              <Button className="bg-foreground hover:bg-foreground text-background flex items-center gap-1">
-                <FilterIcon className="w-4 h-4" />
-                <span>Filter</span>
-              </Button>
-            </DrawerTrigger>
-            <DrawerContent className="text-center">
-              <DrawerHeader>
-                <DrawerTitle>Categories</DrawerTitle>
-              </DrawerHeader>
-              <div className="flex flex-col px-4 gap-4">
-                {categories.map((category, index) => (
-                  <Button
-                    key={category.name}
-                    ref={(el) => {
-                      drawerTabsRef.current[index] = el;
-                    }}
-                    className={clsx(
-                      "rounded-md py-3 bg-background text-foreground",
-                      {
-                        "bg-foreground text-background":
-                          selectedCategory === category.value,
+      {isMobile ? (
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex-1">
+              <SearchInput />
+            </div>
+            <Drawer open={isOpen} onOpenChange={setIsOpen}>
+              <DrawerTrigger asChild>
+                <Button className="bg-foreground text-background flex items-center gap-1">
+                  <FilterIcon className="w-4 h-4" />
+                  <span>Filter</span>
+                </Button>
+              </DrawerTrigger>
+              <DrawerContent className="text-center">
+                <DrawerHeader>
+                  <DrawerTitle>Categories</DrawerTitle>
+                </DrawerHeader>
+                <div className="grid grid-cols-2 gap-2 px-4 py-2">
+                  {categories.map((category, index) => (
+                    <Button
+                      key={category.name}
+                      ref={(el) => {
+                        drawerTabsRef.current[index] = el;
+                      }}
+                      variant={
+                        selectedCategory === category.value
+                          ? "default"
+                          : "outline"
                       }
-                    )}
-                    onClick={() => {
-                      handleCategoryClick(category.value);
-                      setIsOpen(false);
-                    }}
-                  >
-                    {category.name}
-                  </Button>
-                ))}
-              </div>
-              <DrawerFooter>
-                <DrawerClose asChild>
-                  <Button>Close</Button>
-                </DrawerClose>
-              </DrawerFooter>
-            </DrawerContent>
-          </Drawer>
+                      className={clsx("w-full py-2")}
+                      onClick={() => {
+                        handleCategoryClick(category.value);
+                        setIsOpen(false);
+                      }}
+                    >
+                      {category.name}
+                    </Button>
+                  ))}
+                </div>
+                <DrawerFooter>
+                  <DrawerClose asChild>
+                    <Button>Close</Button>
+                  </DrawerClose>
+                </DrawerFooter>
+              </DrawerContent>
+            </Drawer>
+          </div>
+
+          {/* 当前选中的分类标签 */}
+          {selectedCategory && (
+            <div className="flex items-center">
+              <Badge className="bg-foreground text-background flex gap-1 items-center">
+                <span>
+                  Category:{" "}
+                  {categories.find((c) => c.value === selectedCategory)?.name}
+                </span>
+              </Badge>
+            </div>
+          )}
         </div>
-      )}
+      ) : (
+        /* 桌面端布局 */
+        <div className="rounded-xl overflow-hidden border border-border/60 shadow-sm bg-foreground">
+          <div className="flex items-center justify-between p-4 relative">
+            <div className="flex-1 flex items-center justify-around gap-1 relative">
+              {categories.map((category, index) => (
+                <motion.button
+                  key={category.name}
+                  ref={(el) => {
+                    tabsRef.current[index] = el;
+                  }}
+                  className={clsx(
+                    "relative px-4 py-2 rounded-md z-10 font-medium",
+                    {
+                      "text-foreground": selectedCategory === category.value,
+                      "text-background": selectedCategory !== category.value,
+                    }
+                  )}
+                  onClick={() => handleCategoryClick(category.value)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {category.name}
+                </motion.button>
+              ))}
 
-      {/* 桌面端布局 */}
-      {!isMobile && (
-        <div className="flex items-center justify-around bg-foreground text-sm rounded-md p-4 shadow-lg w-full relative">
-          {categories.map((category, index) => (
-            <motion.button
-              key={category.name}
-              ref={(el) => {
-                tabsRef.current[index] = el;
-              }}
-              className={clsx(
-                "text-background rounded-md px-4 py-2 cursor-pointer z-10",
-                {
-                  "text-foreground": selectedCategory === category.value,
-                }
-              )}
-              onClick={() => handleCategoryClick(category.value)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {category.name}
-            </motion.button>
-          ))}
+              {/* 滑动的active指示器 */}
+              <motion.div
+                className="absolute bg-background rounded-md h-[100%] z-0"
+                initial={false}
+                animate={{
+                  left: activeTabStyle.left,
+                  width: activeTabStyle.width,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 30,
+                }}
+                layoutDependency={activeTabStyle}
+              />
+            </div>
 
-          {/* 滑动的desktop active指示器 */}
-          <motion.div
-            className="absolute bg-background rounded-md h-10 z-0"
-            initial={false}
-            animate={{
-              left: activeTabStyle.left,
-              width: activeTabStyle.width,
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 30,
-            }}
-            layoutDependency={activeTabStyle}
-          />
-          <span className="text-xl font-medium text-background">|</span>
+            {/* 分隔线 */}
+            <div className="w-px h-10 bg-background/50 mx-4" />
 
-          {/* search */}
-          <SearchInput />
+            {/* 搜索 */}
+            <div className="w-1/3">
+              <SearchInput />
+            </div>
+          </div>
         </div>
       )}
     </div>

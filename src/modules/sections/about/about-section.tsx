@@ -68,11 +68,8 @@ export default function AboutSection() {
   const isMobile = useIsMobile();
 
   return (
-    <div
-      ref={containerRef}
-      className="relative min-h-screen px-4 sm:px-6 lg:px-8"
-    >
-      <div className="py-16 sm:py-20 lg:py-28">
+    <section id="about" ref={containerRef} className="main">
+      <div className="py-16 sm:py-20 lg:py-28 relative min-h-screen px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-20">
           {/* 头像部分 - 移动端在上方，桌面端在右侧 */}
@@ -268,6 +265,6 @@ export default function AboutSection() {
           </div>
         </SectionBlock>
       </div>
-    </div>
+    </section>
   );
 }

@@ -4,12 +4,10 @@ import { useCallback } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { SearchIcon } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { SearchIcon, XIcon } from "lucide-react";
 import { useBlogStore } from "@/store/blog";
 
 const SearchInput = () => {
-  const isMobile = useIsMobile();
   const { searchQuery, setSearch } = useBlogStore();
 
   // 处理输入框变化
@@ -20,28 +18,37 @@ const SearchInput = () => {
     [setSearch]
   );
 
+  // 清除搜索
+  const clearSearch = useCallback(() => {
+    setSearch("");
+  }, [setSearch]);
+
   return (
-    <div className="flex items-center">
+    <div className="relative flex items-center w-full">
       <Input
         type="text"
-        placeholder="Search..."
-        className={`w-full border-none rounded-r-none ${
-          isMobile
-            ? "!bg-foreground !text-background"
-            : "!bg-background !text-foreground"
-        }`}
-        onChange={(e) => handleInputChange(e)}
+        placeholder="Search"
+        className={`w-full text-foreground !bg-background`}
+        onChange={handleInputChange}
         value={searchQuery}
       />
-      <Button
-        className={`rounded-l-none cursor-pointer ${
-          isMobile
-            ? "bg-foreground hover:bg-foreground text-background"
-            : "bg-background hover:bg-background"
-        }`}
-      >
-        <SearchIcon className="w-5 h-5 text-muted-foreground" />
-      </Button>
+
+      {/* 搜索图标或清除按钮 */}
+      <div className="absolute right-2">
+        {searchQuery ? (
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="h-7 w-7"
+            onClick={clearSearch}
+          >
+            <XIcon className="h-4 w-4" />
+          </Button>
+        ) : (
+          <SearchIcon className="h-4 w-4 text-muted-foreground" />
+        )}
+      </div>
     </div>
   );
 };

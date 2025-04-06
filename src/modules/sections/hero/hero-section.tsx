@@ -121,11 +121,12 @@ const HeroSection = () => {
             animate="animate"
             className={`flex flex-wrap gap-4 ${isMobile ? "justify-center" : "justify-start"} mb-6`}
           >
-            <Link href="/about" className="w-full sm:w-auto">
-              <Button className="w-full sm:w-auto cursor-pointer">
-                About me
-              </Button>
-            </Link>
+            <Button
+              className="w-full sm:w-auto cursor-pointer"
+              onClick={() => scrollToSection("about")}
+            >
+              About me
+            </Button>
             <Button
               variant="outline"
               className="w-full sm:w-auto cursor-pointer"

@@ -1,17 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronLeft } from "lucide-react";
 
 import { PortfolioList } from "@/components/portfolio/portfolio-list";
 import { PortfolioDetail } from "@/components/portfolio/portfolio-detail";
 import { Button } from "@/components/ui/button";
-import { portfolioItems } from "@/content/portfolio/portfolio-data";
 import type { Portfolio } from "@/types/portfolio";
 
-export function PortfolioSection() {
+interface PortfolioSectionProps {
+  initialPortfolios: Portfolio[];
+}
+
+export function PortfolioSection({ initialPortfolios }: PortfolioSectionProps) {
+  const [portfolios, setPortfolios] = useState<Portfolio[]>(initialPortfolios);
   const [selectedItem, setSelectedItem] = useState<Portfolio | null>(null);
+
+  useEffect(() => {
+    setPortfolios(initialPortfolios);
+  }, [initialPortfolios]);
 
   const handleSelectItem = (item: Portfolio) => {
     setSelectedItem(item);
@@ -22,7 +30,7 @@ export function PortfolioSection() {
   };
 
   return (
-    <section className="main px-4">
+    <section id="portfolio" className="main px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -32,10 +40,8 @@ export function PortfolioSection() {
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
           Portfolio
         </h2>
-        <p className="text-muted-foreground max-w-[700px]">
-          Explore my recent projects and creative works. Each project represents
-          my skills, passion, and dedication to creating meaningful digital
-          experiences.
+        <p className="text-muted-foreground">
+          Here are some of my projects and works.
         </p>
       </motion.div>
 
@@ -55,7 +61,7 @@ export function PortfolioSection() {
               className="mb-6 flex items-center gap-1"
             >
               <ChevronLeft className="h-4 w-4" />
-              Back to all projects
+              Back to Portfolio
             </Button>
             <PortfolioDetail item={selectedItem} />
           </motion.div>
@@ -68,10 +74,7 @@ export function PortfolioSection() {
             transition={{ duration: 0.3 }}
             className="mt-12"
           >
-            <PortfolioList
-              items={portfolioItems}
-              onSelectItem={handleSelectItem}
-            />
+            <PortfolioList items={portfolios} onSelectItem={handleSelectItem} />
           </motion.div>
         )}
       </AnimatePresence>

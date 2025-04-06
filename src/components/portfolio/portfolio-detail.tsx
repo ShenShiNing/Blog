@@ -45,9 +45,7 @@ export function PortfolioDetail({ item }: PortfolioDetailProps) {
               className="flex flex-wrap gap-2 mt-3"
             >
               {item.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">
-                  {tag}
-                </Badge>
+                <Badge key={tag}>{tag}</Badge>
               ))}
             </motion.div>
           </div>
@@ -93,22 +91,11 @@ export function PortfolioDetail({ item }: PortfolioDetailProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <h3 className="text-xl font-semibold mb-4">Project Overview</h3>
-          <div className="prose prose-gray dark:prose-invert max-w-none">
-            <p className="text-muted-foreground mb-4">{item.description}</p>
-          </div>
-
-          {item.features && item.features.length > 0 && (
-            <>
-              <h3 className="text-xl font-semibold mt-8 mb-4">Key Features</h3>
-              <ul className="space-y-2 list-disc pl-5">
-                {item.features.map((feature, index) => (
-                  <li key={index} className="text-muted-foreground">
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </>
+          {/* 如果有MDX内容，优先显示MDX内容 */}
+          {item.content && (
+            <div className="prose prose-gray dark:prose-invert max-w-none">
+              {item.content}
+            </div>
           )}
 
           {item.images && item.images.length > 0 && (
