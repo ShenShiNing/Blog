@@ -9,7 +9,7 @@ import { Blog } from "@/types/blog";
 import { Portfolio } from "@/types/portfolio";
 
 export const dynamicParams = true;
-export const revalidate = 60 * 60 * 24 * 7;
+export const revalidate = 604800;
 export const generateStaticParams = async () => {
   const blogs = await getAllBlogs();
   const portfolios = await getAllPortfolios();
