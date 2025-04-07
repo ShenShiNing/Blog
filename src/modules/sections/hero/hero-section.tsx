@@ -56,7 +56,7 @@ const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8"
+      className="main flex items-center justify-center px-4 sm:px-6 lg:px-8"
     >
       <div className="container flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
         {/* 头像部分 - 移动端在上方居中，桌面端在右侧 */}
