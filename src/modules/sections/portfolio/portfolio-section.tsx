@@ -13,7 +13,7 @@ interface PortfolioSectionProps {
   initialPortfolios: Portfolio[];
 }
 
-export function PortfolioSection({ initialPortfolios }: PortfolioSectionProps) {
+const PortfolioSection = ({ initialPortfolios }: PortfolioSectionProps) => {
   const [portfolios, setPortfolios] = useState<Portfolio[]>(initialPortfolios);
   const [selectedItem, setSelectedItem] = useState<Portfolio | null>(null);
 
@@ -80,4 +80,6 @@ export function PortfolioSection({ initialPortfolios }: PortfolioSectionProps) {
       </AnimatePresence>
     </section>
   );
-}
+};
+
+export default PortfolioSection;
