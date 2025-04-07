@@ -50,19 +50,38 @@ const ContactSection = () => {
     setFormState((prev) => ({ ...prev, [name]: value }));
   };
 
+  const validateForm = () => {
+    const errors = [];
+    if (!formState.name.trim()) {
+      errors.push("Name cannot be empty");
+    }
+    if (!formState.email.trim()) {
+      errors.push("Email cannot be empty");
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formState.email)) {
+      errors.push("Please enter a valid email address");
+    }
+    if (!formState.message.trim()) {
+      errors.push("Message cannot be empty");
+    } else if (formState.message.length < 10) {
+      errors.push("Message must be at least 10 characters long");
+    }
+    return errors;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formState.name || !formState.email || !formState.message) {
+    const errors = validateForm();
+    if (errors.length > 0) {
       setFormStatus("error");
-      setErrorMessage("Please fill in all fields");
+      setErrorMessage(errors.join(", "));
       return;
     }
 
     setFormStatus("submitting");
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formState),
@@ -73,7 +92,7 @@ const ContactSection = () => {
 
       setFormStatus("success");
       setFormState({ name: "", email: "", message: "" });
-      setTimeout(() => setFormStatus("idle"), 5000);
+      setTimeout(() => setFormStatus("idle"), 3000);
     } catch (error) {
       console.error("Error sending message:", error);
       setFormStatus("error");
@@ -83,7 +102,7 @@ const ContactSection = () => {
       setTimeout(() => {
         setFormStatus("idle");
         setErrorMessage("");
-      }, 5000);
+      }, 3000);
     }
   };
 

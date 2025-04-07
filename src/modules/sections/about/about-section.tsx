@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, Variants } from "motion/react";
-import { DownloadIcon, Github, Mail, Twitter } from "lucide-react";
+import { DownloadIcon, Github, MailIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -125,14 +125,10 @@ export default function AboutSection() {
                 icon={Github}
                 label="GitHub"
               />
-              <SocialButton
-                href="https://twitter.com"
-                icon={Twitter}
-                label="Twitter"
-              />
+
               <SocialButton
                 href="mailto:shen353824385@gmail.com"
-                icon={Mail}
+                icon={MailIcon}
                 label="Email"
               />
             </div>
@@ -141,7 +137,7 @@ export default function AboutSection() {
               size="lg"
               className={`rounded-md px-6 ${isMobile ? "w-full" : "md:w-auto"}`}
             >
-              <Link href="/contact">
+              <Link href="/resume.pdf" download>
                 <DownloadIcon className="h-4 w-4 mr-2" />
                 Resume
               </Link>
