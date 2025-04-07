@@ -13,10 +13,7 @@ export const revalidate = 604800;
 export const generateStaticParams = async () => {
   const blogs = await getAllBlogs();
   const portfolios = await getAllPortfolios();
-  return {
-    blogs,
-    portfolios,
-  };
+  return [{ blogs }, { portfolios }];
 };
 
 const Page = async ({
