@@ -56,7 +56,7 @@ const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="main flex items-center justify-center px-4 sm:px-6 lg:px-8"
+      className="main flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-10 md:pt-16"
     >
       <div className="container flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
         {/* 头像部分 - 移动端在上方居中，桌面端在右侧 */}
@@ -67,13 +67,18 @@ const HeroSection = () => {
           animate="animate"
           className={`w-full flex ${isMobile ? "justify-center" : "justify-end"} ${isMobile ? "order-first" : "order-last"}`}
         >
-          <Link href="/about" className="relative group">
+          <div
+            className="relative group"
+            onClick={() => {
+              scrollToSection("about");
+            }}
+          >
             <div className="absolute w-[calc(100%+20px)] h-[calc(100%+20px)] rounded-full bg-blue-500 blur-3xl -top-2.5 -left-2.5 transition-all group-hover:blur-2xl" />
             <Avatar className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-72 lg:h-72 transition-transform duration-300 group-hover:scale-105">
               <AvatarImage src="/images/Avatar.jpg" />
               <AvatarFallback>X</AvatarFallback>
             </Avatar>
-          </Link>
+          </div>
         </motion.div>
 
         {/* 文本和按钮部分 - 移动端居中，桌面端左对齐 */}
