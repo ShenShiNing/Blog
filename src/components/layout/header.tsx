@@ -109,8 +109,7 @@ const Header = () => {
         {!isMobile && (
           <nav className="flex items-center space-x-8">
             {navItems.map((item) => (
-              <Link
-                href={item.href}
+              <div
                 key={item.label}
                 className={clsx("header-link relative", {
                   "header-link-active": isItemActive(item),
@@ -124,7 +123,7 @@ const Header = () => {
                   />
                 )}
                 {item.label}
-              </Link>
+              </div>
             ))}
             <ThemeToggle />
           </nav>
@@ -157,9 +156,7 @@ const Header = () => {
                   <div className="flex flex-col justify-center items-center gap-8">
                     {navItems.map((item) => (
                       <div key={item.label}>
-                        <Link
-                          href={item.href}
-                          key={item.label}
+                        <div
                           onClick={(e) => {
                             handleNavClick(item, e);
                           }}
@@ -168,7 +165,7 @@ const Header = () => {
                           })}
                         >
                           {item.label}
-                        </Link>
+                        </div>
                         {isItemActive(item) && (
                           <motion.div className="h-0.5 bg-primary" />
                         )}

@@ -130,7 +130,7 @@
   }
 
   .header-link {
-    @apply text-sm text-muted-foreground;
+    @apply text-sm text-muted-foreground cursor-pointer;
   }
 
   .header-link:hover {
