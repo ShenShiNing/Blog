@@ -1,6 +1,6 @@
 import { Blog } from "@/types/blog";
 import Image from "next/image";
-import { CalendarIcon, UserIcon, ClockIcon, TagIcon } from "lucide-react";
+import { CalendarIcon, UserIcon, TagIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "motion/react";
 
@@ -43,13 +43,6 @@ const BlogDetail = ({ blog }: BlogDetailProps) => {
             <CalendarIcon className="h-4 w-4" />
             <span>{blog.createdDate}</span>
           </div>
-
-          {blog.readTime && (
-            <div className="flex items-center gap-1">
-              <ClockIcon className="h-4 w-4" />
-              <span>{blog.readTime}</span>
-            </div>
-          )}
 
           <div className="flex items-center gap-1">
             <span className="font-medium">{blog.category}</span>
