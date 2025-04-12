@@ -41,11 +41,5 @@ export function CustomCode({ children, className = "" }: CodeProps) {
     };
   }, [children, lang, resolvedTheme]);
 
-  return (
-    <div
-      ref={ref}
-      dangerouslySetInnerHTML={{ __html: html }}
-      className="mt-4 mb-4 border rounded-md overflow-hidden"
-    />
-  );
+  return <div ref={ref} dangerouslySetInnerHTML={{ __html: html }} clas/>;
 }
