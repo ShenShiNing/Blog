@@ -57,8 +57,6 @@ export async function getBlogData(slug: string): Promise<Blog> {
     createdDate: data.createdDate as string,
     updatedDate: data.updatedDate as string | undefined,
     content: compiledContent,
-    readTime: data.readTime as string | undefined,
-    isPublished: data.isPublished as boolean | undefined,
   };
 
   // 验证必要字段
