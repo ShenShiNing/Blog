@@ -12,8 +12,6 @@ export interface Blog {
   createdDate: string;
   updatedDate?: string;
   content: ReactNode; // 编译后的 MDX 内容
-  readTime?: string;
-  isPublished?: boolean;
 }
 
 export interface Category {

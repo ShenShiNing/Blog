@@ -74,8 +74,6 @@ docker run -d \
     -e RESEND_API_KEY=re_cQV2EkBJ_LdtiP8iaW6C75KGeTxw8tZSS \
     -e EMAIL_TO=shen353824385@gmail.com \
     localhost:5000/blog
-
-echo '✅ 部署完成'
 "@
 
 # 确保使用 LF 换行符
@@ -107,4 +105,4 @@ if ($LASTEXITCODE -ne 0) { Write-Error "远程部署失败"; exit 1 }
 # 清理本地临时文件
 Remove-Item "$tempDeployScriptPath" -Force
 
-Write-Host "✅ 部署成功，你可以访问：http://${remoteHost}:3000"
+Write-Host "✅ 部署成功，你可以访问：https://xiaoshen.site"

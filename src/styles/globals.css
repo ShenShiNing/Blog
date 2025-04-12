@@ -168,6 +168,6 @@
   }
 
   .shiki {
-    @apply p-5 mt-4 mb-4 rounded-md;
+    @apply p-5 mt-4 mb-4 rounded-md overflow-x-auto;
   }
 }

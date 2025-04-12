@@ -27,24 +27,24 @@ const categories: Category[] = [
     value: "",
   },
   {
-    name: "Web Design",
-    value: "Web Design",
+    name: "Frontend",
+    value: "Frontend",
   },
   {
-    name: "Development",
-    value: "Development",
+    name: "Backend",
+    value: "Backend",
   },
   {
-    name: "Databases",
-    value: "Databases",
+    name: "DevOps",
+    value: "DevOps",
   },
   {
     name: "Search Engines",
     value: "SEO",
   },
   {
-    name: "Marketing",
-    value: "Marketing",
+    name: "AI",
+    value: "AI",
   },
 ];
 
