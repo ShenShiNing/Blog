@@ -105,7 +105,7 @@ const BlogDetail = ({ blog }: BlogDetailProps) => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.4 + index * 0.05 }}
             >
-              <Badge variant="outline" className="flex items-center gap-1">
+              <Badge className="flex items-center gap-1">
                 <TagIcon className="h-3 w-3" />
                 {tag}
               </Badge>

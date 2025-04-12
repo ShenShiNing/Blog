@@ -6,10 +6,12 @@ import { useTheme } from "next-themes";
 
 interface CodeProps {
   children: string;
-  className?: string;
+  className: string;
 }
 
 export function CustomCode({ children, className = "" }: CodeProps) {
+  console.log("className :", className);
+
   const { theme } = useTheme();
   const resolvedTheme = useMemo(
     () => (theme === "dark" ? "github-dark-default" : "github-light-default"),
@@ -41,5 +43,13 @@ export function CustomCode({ children, className = "" }: CodeProps) {
     };
   }, [children, lang, resolvedTheme]);
 
-  return <div ref={ref} dangerouslySetInnerHTML={{ __html: html }} clas/>;
+  if (!className) {
+    return (
+      <code className="relative rounded bg-muted px-[0.4rem] py-[0.2rem] font-mono text-sm text-foreground break-words">
+        {children}
+      </code>
+    );
+  }
+
+  return <div ref={ref} dangerouslySetInnerHTML={{ __html: html }} />;
 }

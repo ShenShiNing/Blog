@@ -1,7 +1,6 @@
 import { compileMDX } from "next-mdx-remote/rsc";
 import type { ComponentType, ReactNode } from "react";
 import { customComponents } from "@/components/mdx/custom-mdx";
-import { CustomCode } from "@/components/mdx/custom-code";
 
 interface CompileMdxOptions {
   source: string;
@@ -20,7 +19,6 @@ export async function compileMdx({
       },
     },
     components: {
-      code: CustomCode,
       ...customComponents,
     },
   });

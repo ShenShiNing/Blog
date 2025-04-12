@@ -137,10 +137,15 @@ export default function AboutSection() {
               size="lg"
               className={`rounded-md px-6 ${isMobile ? "w-full" : "md:w-auto"}`}
             >
-              <Link href="/resume.pdf" download>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:cursor-pointer"
+              >
                 <DownloadIcon className="h-4 w-4 mr-2" />
                 Resume
-              </Link>
+              </a>
             </Button>
           </motion.div>
         </div>
@@ -244,7 +249,7 @@ export default function AboutSection() {
         {/* Education Section */}
         <SectionBlock title="Education">
           <div className="relative border-l border-border pl-6">
-            <div className="absolute -left-8 mt-1 h-4 w-4 rounded-full border-2 border-background bg-primary" />
+            <div className="absolute -left-2 mt-1 h-4 w-4 rounded-full border-2 border-background bg-primary" />
             <h3 className={`${isMobile ? "text-lg" : "text-xl"} font-bold`}>
               Information Management and Information System
             </h3>
