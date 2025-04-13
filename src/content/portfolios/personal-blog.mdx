@@ -1,0 +1,65 @@
+---
+id: "personal-blog"
+title: "个人博客与作品集网站"
+date: "2024-07-28" # 您可以修改为实际的启动日期
+coverImage: "/images/portfolio/blog-home.png" # 建议替换为项目截图
+tags:
+  [
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Tailwind CSS",
+    "shadcn/ui",
+    "MDX",
+    "Zustand",
+    "Framer Motion",
+    "Vercel",
+  ]
+shortDescription: "使用现代 Web 技术构建的个人网站，用于展示博客文章和作品集项目。"
+features:
+  - "基于 MDX 的博客系统 (分类、搜索)"
+  - "作品集展示"
+  - "响应式设计"
+  - "亮色/暗色主题切换"
+  - "使用 Shiki 实现代码语法高亮"
+  - "使用 Zustand 进行状态管理"
+  - "使用 Framer Motion 添加动画效果"
+liveUrl: "#" # 替换为实际部署的 URL
+githubUrl: "#" # 替换为实际的 GitHub 仓库 URL
+---
+
+## 项目概述
+
+这是您当前正在浏览的个人网站！它旨在作为一个平台，分享技术见解、学习笔记（通过博客）并展示我完成的各种项目（通过作品集）。
+
+## 主要目标
+
+- 创建一个现代化、高性能的个人展示平台。
+- 提供一个流畅、用户友好的界面来阅读博客文章和浏览项目。
+- 方便地通过 Markdown/MDX 文件管理和更新内容。
+- 实践和应用最新的前端技术栈。
+
+## 技术选型
+
+该项目采用了以下技术构建：
+
+- **[Next.js](https://nextjs.org/) (App Router):** 提供服务端渲染 (SSR)、静态站点生成 (SSG) 和优化的开发体验。App Router 带来了更好的路由和布局管理。
+- **[TypeScript](https://www.typescriptlang.org/):** 增强代码健壮性和可维护性。
+- **[Tailwind CSS](https://tailwindcss.com/) & [shadcn/ui](https://ui.shadcn.com/):** 用于快速构建美观、一致且响应式的用户界面。shadcn/ui 提供了一组高质量、可定制的 UI 组件。
+- **[MDX](https://mdxjs.com/):** 允许在 Markdown 文件中嵌入 JSX 组件，极大地增强了内容表现力，非常适合博客文章和项目详情页。
+- **[Zustand](https://github.com/pmndrs/zustand):** 轻量级、灵活的状态管理库，用于管理全局 UI 状态（如主题、移动菜单）和特定功能状态（如博客过滤）。
+- **[Shiki](https://shiki.style/):** 用于在服务端对代码块进行精确且美观的语法高亮。
+- **[Framer Motion](https://www.framer.com/motion/):** 为页面过渡和元素交互添加流畅的动画效果。
+- **[Vercel](https://vercel.com/):** 用于项目的托管和持续部署，提供了极佳的 Next.js 支持。
+
+## 核心功能详解
+
+- **博客模块:** 支持按分类筛选文章，并提供关键词搜索功能。文章使用 MDX 编写，支持丰富的格式和嵌入式组件。
+- **作品集模块:** 以卡片形式展示项目列表，点击可查看包含详细描述、技术栈、截图和相关链接（Live Demo, GitHub）的项目详情页。
+- **内容管理:** 所有博客文章和作品集数据都存储在 `/src/content` 目录下的 `.mdx` 文件中，通过解析文件的 frontmatter 获取元数据，内容部分则被编译为 React 组件进行渲染。
+- **主题切换:** 用户可以在亮色和暗色主题之间自由切换，主题状态通过 `next-themes` 和 Zustand 管理。
+- **响应式布局:** 网站在桌面、平板和移动设备上均能良好显示。
+
+## 结语
+
+构建这个网站本身就是一个有趣的学习和实践过程。它不仅是我展示技能和分享知识的窗口，也是我不断探索和应用新技术的地方。
