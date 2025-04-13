@@ -24,29 +24,29 @@ const SearchInput = () => {
   }, [setSearch]);
 
   return (
-    <div className="relative flex items-center w-full">
+    <div className="search-container">
       <Input
         type="text"
         placeholder="Search"
-        className={`w-full text-foreground !bg-background`}
+        className="search-input"
         onChange={handleInputChange}
         value={searchQuery}
       />
 
       {/* 搜索图标或清除按钮 */}
-      <div className="absolute right-2">
+      <div className="search-button">
         {searchQuery ? (
           <Button
             type="button"
             variant="ghost"
             size="icon"
-            className="h-7 w-7"
+            className="search-clear-button"
             onClick={clearSearch}
           >
             <XIcon className="h-4 w-4" />
           </Button>
         ) : (
-          <SearchIcon className="h-4 w-4 text-muted-foreground" />
+          <SearchIcon className="search-icon" />
         )}
       </div>
     </div>

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronLeft } from "lucide-react";
 
@@ -8,26 +7,15 @@ import { PortfolioList } from "@/components/portfolio/portfolio-list";
 import { PortfolioDetail } from "@/components/portfolio/portfolio-detail";
 import { Button } from "@/components/ui/button";
 import type { Portfolio } from "@/types/portfolio";
+import { usePortfolioStore } from "@/store/portfolio";
 
 interface PortfolioSectionProps {
   initialPortfolios: Portfolio[];
 }
 
 const PortfolioSection = ({ initialPortfolios }: PortfolioSectionProps) => {
-  const [portfolios, setPortfolios] = useState<Portfolio[]>(initialPortfolios);
-  const [selectedItem, setSelectedItem] = useState<Portfolio | null>(null);
-
-  useEffect(() => {
-    setPortfolios(initialPortfolios);
-  }, [initialPortfolios]);
-
-  const handleSelectItem = (item: Portfolio) => {
-    setSelectedItem(item);
-  };
-
-  const handleBack = () => {
-    setSelectedItem(null);
-  };
+  const { selectedPortfolio, isDetailView, clearSelectedPortfolio } =
+    usePortfolioStore();
 
   return (
     <section id="portfolio" className="main px-4">
@@ -46,7 +34,7 @@ const PortfolioSection = ({ initialPortfolios }: PortfolioSectionProps) => {
       </motion.div>
 
       <AnimatePresence mode="wait">
-        {selectedItem ? (
+        {isDetailView && selectedPortfolio ? (
           <motion.div
             key="detail"
             initial={{ opacity: 0 }}
@@ -57,13 +45,13 @@ const PortfolioSection = ({ initialPortfolios }: PortfolioSectionProps) => {
           >
             <Button
               variant="ghost"
-              onClick={handleBack}
+              onClick={clearSelectedPortfolio}
               className="mb-6 flex items-center gap-1"
             >
               <ChevronLeft className="h-4 w-4" />
               Back to Portfolio
             </Button>
-            <PortfolioDetail item={selectedItem} />
+            <PortfolioDetail item={selectedPortfolio} />
           </motion.div>
         ) : (
           <motion.div
@@ -74,7 +62,7 @@ const PortfolioSection = ({ initialPortfolios }: PortfolioSectionProps) => {
             transition={{ duration: 0.3 }}
             className="mt-12"
           >
-            <PortfolioList items={portfolios} onSelectItem={handleSelectItem} />
+            <PortfolioList items={initialPortfolios} />
           </motion.div>
         )}
       </AnimatePresence>

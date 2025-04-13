@@ -8,7 +8,7 @@ interface BlogState {
   selectedCategory: string | ""; // 当前选中的分类
   searchQuery: string; // 搜索查询
   selectedBlog: Blog | null; // 当前选中的博客
-  isDetailView: boolean; // 是否显示详情视图
+  isDetailView: boolean; // 是否为博客详情视图
   currentPage: number; // 当前页码
   pageSize: number; // 每页显示数量
   setBlogs: (blogs: Blog[]) => void; // 初始化博客数据

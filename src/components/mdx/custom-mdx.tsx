@@ -3,36 +3,6 @@ import React from "react";
 import { CustomCode } from "./custom-code";
 
 export const customComponents = {
-  h1: (props: React.HTMLProps<HTMLHeadingElement>) => (
-    <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-8 mt-10 pb-2 border-b">
-      {props.children}
-    </h1>
-  ),
-  h2: (props: React.HTMLProps<HTMLHeadingElement>) => (
-    <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight mt-12 mb-6 pb-2 border-b first:mt-0">
-      {props.children}
-    </h2>
-  ),
-  h3: (props: React.HTMLProps<HTMLHeadingElement>) => (
-    <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mt-10 mb-5">
-      {props.children}
-    </h3>
-  ),
-  h4: (props: React.HTMLProps<HTMLHeadingElement>) => (
-    <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mt-8 mb-4">
-      {props.children}
-    </h4>
-  ),
-  p: (props: React.HTMLProps<HTMLParagraphElement>) => (
-    <div className="leading-relaxed text-base my-6 [&:not(:first-child)]:mt-6">
-      {props.children}
-    </div>
-  ),
-  blockquote: (props: React.HTMLProps<HTMLQuoteElement>) => (
-    <blockquote className="border-l-4 border-primary/50 bg-muted/30 pl-6 py-3 my-6 italic text-muted-foreground">
-      {props.children}
-    </blockquote>
-  ),
   a: (props: React.HTMLProps<HTMLAnchorElement>) => (
     <a
       href={props.href}
@@ -48,48 +18,20 @@ export const customComponents = {
       src={props.src || ""}
       alt={props.alt || ""}
       className="rounded-lg my-8 w-full max-w-2xl mx-auto object-contain shadow-md"
+      width={800}
+      height={500}
     />
   ),
-  hr: () => <hr className="my-12 border-border/50" />,
-  table: (props: React.HTMLProps<HTMLTableElement>) => (
-    <div className="my-8 w-full overflow-x-auto border rounded-lg">
-      <table className="w-full min-w-[600px]">{props.children}</table>
-    </div>
-  ),
-  tr: (props: React.HTMLProps<HTMLTableRowElement>) => (
-    <tr className="m-0 border-t border-border/50 p-0 transition-colors hover:bg-muted/50">
+  blockquote: (props: React.HTMLProps<HTMLQuoteElement>) => (
+    <blockquote className="border-l-4 border-primary/50 bg-muted/30 pl-6 py-3 my-6 italic text-muted-foreground">
       {props.children}
-    </tr>
-  ),
-  th: (props: React.HTMLProps<HTMLTableCellElement>) => (
-    <th className="border-b border-border/50 px-4 py-3 text-left font-semibold text-muted-foreground [&[align=center]]:text-center [&[align=right]]:text-right">
-      {props.children}
-    </th>
-  ),
-  td: (props: React.HTMLProps<HTMLTableCellElement>) => (
-    <td className="px-4 py-3 text-left [&[align=center]]:text-center [&[align=right]]:text-right">
-      {props.children}
-    </td>
-  ),
-  ul: (props: React.HTMLProps<HTMLUListElement>) => (
-    <ul className="my-6 ml-6 list-disc space-y-2 pl-4">{props.children}</ul>
-  ),
-  ol: (props: React.HTMLProps<HTMLOListElement>) => (
-    <ol className="my-6 ml-6 list-decimal space-y-2 pl-4">{props.children}</ol>
-  ),
-  li: (props: React.HTMLProps<HTMLLIElement>) => (
-    <li className="leading-relaxed">{props.children}</li>
-  ),
-  small: (props: React.HTMLProps<HTMLElement>) => (
-    <small className="text-sm font-medium leading-none text-muted-foreground">
-      {props.children}
-    </small>
+    </blockquote>
   ),
   code: (props: React.HTMLProps<HTMLElement>) => {
     const { className, children } = props;
     if (!className) {
       return (
-        <code className="relative rounded bg-foreground px-[0.4rem] py-[0.2rem] font-mono text-sm text-background break-words">
+        <code className="relative rounded bg-muted px-[0.4rem] py-[0.2rem] font-mono text-sm break-words">
           {children}
         </code>
       );

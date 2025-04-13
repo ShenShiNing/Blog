@@ -6,7 +6,6 @@ import { ExternalLink, Github } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import type { Portfolio } from "@/types/portfolio";
 
@@ -16,7 +15,7 @@ interface PortfolioDetailProps {
 
 export function PortfolioDetail({ item }: PortfolioDetailProps) {
   return (
-    <Card className="overflow-hidden">
+    <div className="overflow-hidden">
       <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px]">
         <Image
           src={item.coverImage || "/placeholder.svg"}
@@ -27,7 +26,7 @@ export function PortfolioDetail({ item }: PortfolioDetailProps) {
           className="object-contain rounded-md"
         />
       </div>
-      <CardContent className="p-4 sm:p-6 md:p-8">
+      <div className="p-4 sm:p-6 md:p-8">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
           <div>
             <motion.h2
@@ -120,7 +119,7 @@ export function PortfolioDetail({ item }: PortfolioDetailProps) {
             </>
           )}
         </motion.div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

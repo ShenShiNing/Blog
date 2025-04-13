@@ -5,11 +5,12 @@ import Link from "next/link";
 import ThemeToggle from "@/components/theme/theme-toggle";
 
 import { motion, AnimatePresence } from "motion/react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MenuIcon, XIcon } from "lucide-react";
 import { scrollLock, scrollToSection } from "@/lib/scroll";
 import { usePathname } from "next/navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useUISettingsStore } from "@/store/ui-settings";
 
 const navItems = [
   { label: "Home", href: "/", sectionId: "hero" },
@@ -20,19 +21,20 @@ const navItems = [
 
 const Header = () => {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  const { isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } =
+    useUISettingsStore();
   const isMobile = useIsMobile();
   const isHomePage = pathname === "/";
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
   // 当菜单打开时，禁止滚动
   useEffect(() => {
-    if (!isOpen) {
+    if (!isMobileMenuOpen) {
       scrollLock.disable();
     } else {
       scrollLock.enable();
     }
-  }, [isOpen]);
+  }, [isMobileMenuOpen]);
 
   // 监听滚动，检测当前可见的section
   useEffect(() => {
@@ -77,13 +79,16 @@ const Header = () => {
   }, [isHomePage]);
 
   const handleNavClick = (item: (typeof navItems)[0], e: React.MouseEvent) => {
-    // 如果是首页并且有section ID，滚动到对应位置
     if (isHomePage && item.sectionId) {
       e.preventDefault();
       scrollToSection(item.sectionId);
       setActiveSection(item.sectionId);
-      if (isOpen) {
-        setIsOpen(false);
+      if (isMobileMenuOpen) {
+        closeMobileMenu();
+      }
+    } else {
+      if (isMobileMenuOpen) {
+        closeMobileMenu();
       }
     }
   };
@@ -135,16 +140,16 @@ const Header = () => {
             <ThemeToggle />
             <motion.div
               key="menu-button"
-              animate={{ rotate: isOpen ? 180 : 0 }}
+              animate={{ rotate: isMobileMenuOpen ? 180 : 0 }}
               transition={{ duration: 0.3 }}
               className="text-2xl cursor-pointer"
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={toggleMobileMenu}
             >
-              {isOpen ? <XIcon size={20} /> : <MenuIcon size={20} />}
+              {isMobileMenuOpen ? <XIcon size={20} /> : <MenuIcon size={20} />}
             </motion.div>
 
             <AnimatePresence>
-              {isOpen && (
+              {isMobileMenuOpen && (
                 <motion.div
                   key="mobile-menu"
                   initial={{ x: "100%" }}
@@ -156,16 +161,15 @@ const Header = () => {
                   <div className="flex flex-col justify-center items-center gap-8">
                     {navItems.map((item) => (
                       <div key={item.label}>
-                        <div
-                          onClick={(e) => {
-                            handleNavClick(item, e);
-                          }}
+                        <Link
+                          href={item.href}
+                          onClick={(e) => handleNavClick(item, e)}
                           className={clsx("header-link text-lg", {
                             "header-link-active": isItemActive(item),
                           })}
                         >
                           {item.label}
-                        </div>
+                        </Link>
                         {isItemActive(item) && (
                           <motion.div className="h-0.5 bg-primary" />
                         )}

@@ -44,7 +44,6 @@ export default function BlogSection({ initialBlogs }: BlogSectionProps) {
             transition={{ duration: 0.3 }}
             className="mt-12"
           >
-            {/* 返回按钮 */}
             <Button
               variant="ghost"
               className="mb-6 flex items-center gap-1"
@@ -54,7 +53,6 @@ export default function BlogSection({ initialBlogs }: BlogSectionProps) {
               <span>Back to Blog</span>
             </Button>
 
-            {/* 博客详情 */}
             {selectedBlog && <BlogDetail blog={selectedBlog} />}
           </motion.div>
         ) : (
@@ -66,10 +64,8 @@ export default function BlogSection({ initialBlogs }: BlogSectionProps) {
             transition={{ duration: 0.3 }}
             className="mt-12"
           >
-            {/* 类别和搜索 */}
             <Categories />
 
-            {/* 博客列表 */}
             <BlogList initialBlogs={initialBlogs} />
           </motion.div>
         )}

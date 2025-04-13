@@ -30,6 +30,7 @@ const ThemeToggle = () => {
       size="icon"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       aria-label="Toggle theme"
+      className="cursor-pointer"
     >
       <AnimatePresence mode="wait" initial={false}>
         {theme === "dark" ? (

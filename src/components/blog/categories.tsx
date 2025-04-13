@@ -106,17 +106,17 @@ const Categories = () => {
   }, [updateIndicatorPosition, isMobile]);
 
   return (
-    <div className="space-y-4">
+    <div className="categories-container">
       {/* 移动端布局 */}
       {isMobile ? (
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex-1">
+        <div className="categories-mobile">
+          <div className="categories-mobile-header">
+            <div className="categories-mobile-search">
               <SearchInput />
             </div>
             <Drawer open={isOpen} onOpenChange={setIsOpen}>
               <DrawerTrigger asChild>
-                <Button className="bg-foreground text-background flex items-center gap-1">
+                <Button className="categories-mobile-filter-button">
                   <FilterIcon className="w-4 h-4" />
                   <span>Filter</span>
                 </Button>
@@ -125,7 +125,7 @@ const Categories = () => {
                 <DrawerHeader>
                   <DrawerTitle>Categories</DrawerTitle>
                 </DrawerHeader>
-                <div className="grid grid-cols-2 gap-2 px-4 py-2">
+                <div className="categories-drawer-buttons">
                   {categories.map((category, index) => (
                     <Button
                       key={category.name}
@@ -137,7 +137,7 @@ const Categories = () => {
                           ? "default"
                           : "outline"
                       }
-                      className={clsx("w-full py-2")}
+                      className="categories-drawer-button"
                       onClick={() => {
                         handleCategoryClick(category.value);
                         setIsOpen(false);
@@ -158,8 +158,8 @@ const Categories = () => {
 
           {/* 当前选中的分类标签 */}
           {selectedCategory && (
-            <div className="flex items-center">
-              <Badge className="bg-foreground text-background flex gap-1 items-center">
+            <div className="categories-mobile-selected">
+              <Badge className="categories-mobile-badge">
                 <span>
                   Category:{" "}
                   {categories.find((c) => c.value === selectedCategory)?.name}
@@ -170,22 +170,21 @@ const Categories = () => {
         </div>
       ) : (
         /* 桌面端布局 */
-        <div className="rounded-xl overflow-hidden border border-border/60 shadow-sm bg-foreground">
-          <div className="flex items-center justify-between p-4 relative">
-            <div className="flex-1 flex items-center justify-around gap-1 relative">
+        <div className="categories-desktop">
+          <div className="categories-desktop-container">
+            <div className="categories-list">
               {categories.map((category, index) => (
                 <motion.button
                   key={category.name}
                   ref={(el) => {
                     tabsRef.current[index] = el;
                   }}
-                  className={clsx(
-                    "relative px-4 py-2 rounded-md z-10 font-medium",
-                    {
-                      "text-foreground": selectedCategory === category.value,
-                      "text-background": selectedCategory !== category.value,
-                    }
-                  )}
+                  className={clsx("category-button", {
+                    "category-button-active":
+                      selectedCategory === category.value,
+                    "category-button-inactive":
+                      selectedCategory !== category.value,
+                  })}
                   onClick={() => handleCategoryClick(category.value)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -196,7 +195,7 @@ const Categories = () => {
 
               {/* 滑动的active指示器 */}
               <motion.div
-                className="absolute bg-background rounded-md h-[100%] z-0"
+                className="category-indicator"
                 initial={false}
                 animate={{
                   left: activeTabStyle.left,
@@ -212,10 +211,10 @@ const Categories = () => {
             </div>
 
             {/* 分隔线 */}
-            <div className="w-px h-10 bg-background/50 mx-4" />
+            <div className="categories-divider" />
 
             {/* 搜索 */}
-            <div className="w-1/3">
+            <div className="categories-search">
               <SearchInput />
             </div>
           </div>

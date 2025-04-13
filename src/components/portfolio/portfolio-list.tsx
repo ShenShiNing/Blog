@@ -2,44 +2,53 @@
 
 import { motion } from "motion/react";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import CustomPagination from "@/components/layout/custom-pagination";
 import type { Portfolio } from "@/types/portfolio";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { PortfolioDetail } from "@/components/portfolio/portfolio-detail";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { usePortfolioStore } from "@/store/portfolio";
 
 interface PortfolioListProps {
   items: Portfolio[];
-  onSelectItem: (item: Portfolio) => void;
 }
 
-export function PortfolioList({ items, onSelectItem }: PortfolioListProps) {
-  // 分页相关状态
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 6; // 每页显示的项目数
-  const totalPages = Math.ceil(items.length / pageSize);
+export function PortfolioList({ items }: PortfolioListProps) {
+  const isMobile = useIsMobile();
+  const { selectPortfolio } = usePortfolioStore();
+  const [dialogOpenForPortfolioId, setDialogOpenForPortfolioId] = useState<
+    string | null
+  >(null);
 
-  // 获取当前页的项目
+  const selectedPortfolioForDialog = useMemo(() => {
+    return items.find((item) => item.id === dialogOpenForPortfolioId) ?? null;
+  }, [items, dialogOpenForPortfolioId]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 6;
+  const totalPages = Math.ceil(items.length / pageSize);
   const getPaginatedItems = () => {
     const startIndex = (currentPage - 1) * pageSize;
     return items.slice(startIndex, startIndex + pageSize);
   };
-
-  // 当前页的作品集
   const paginatedItems = getPaginatedItems();
-
-  // 处理页码变化
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    // 滚动到页面顶部
     window.scrollTo({
       top: document.getElementById("portfolio")?.offsetTop || 0,
       behavior: "smooth",
     });
   };
-
-  // 当items变化时重置页码
   useEffect(() => {
     setCurrentPage(1);
   }, [items.length]);
@@ -48,15 +57,24 @@ export function PortfolioList({ items, onSelectItem }: PortfolioListProps) {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
+      transition: { staggerChildren: 0.1 },
     },
   };
-
-  const item = {
+  const itemVariant = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+  };
+
+  const handleOpenDialog = (portfolioId: string) => {
+    setDialogOpenForPortfolioId(portfolioId);
+  };
+
+  const handleClick = (portfolioItem: Portfolio) => {
+    if (isMobile) {
+      selectPortfolio(portfolioItem);
+    } else {
+      handleOpenDialog(portfolioItem.id);
+    }
   };
 
   return (
@@ -68,29 +86,27 @@ export function PortfolioList({ items, onSelectItem }: PortfolioListProps) {
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
       >
         {paginatedItems.map((portfolioItem) => (
-          <motion.div key={portfolioItem.id} variants={item}>
+          <motion.div key={portfolioItem.id} variants={itemVariant}>
             <Card
-              className="overflow-hidden cursor-pointer group h-full flex flex-col"
-              onClick={() => onSelectItem(portfolioItem)}
+              className="portfolio-card group"
+              onClick={() => handleClick(portfolioItem)}
             >
-              <div className="relative h-48 overflow-hidden">
+              <div className="portfolio-card-image-container">
                 <Image
                   src={portfolioItem.coverImage || "/placeholder.svg"}
                   alt={portfolioItem.title}
                   fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="portfolio-card-image"
                 />
               </div>
-              <CardContent className="p-5 flex-1 flex flex-col">
-                <h3 className="font-semibold text-xl mb-2">
-                  {portfolioItem.title}
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4 flex-1">
+              <CardContent className="portfolio-card-content">
+                <h3 className="portfolio-card-title">{portfolioItem.title}</h3>
+                <p className="portfolio-card-description">
                   {portfolioItem.shortDescription}
                 </p>
-                <div className="flex flex-wrap gap-2 mt-auto">
+                <div className="portfolio-card-tags">
                   {portfolioItem.tags.map((tag) => (
-                    <Badge key={tag} className="text-xs">
+                    <Badge key={tag} className="portfolio-card-tag">
                       {tag}
                     </Badge>
                   ))}
@@ -101,7 +117,6 @@ export function PortfolioList({ items, onSelectItem }: PortfolioListProps) {
         ))}
       </motion.div>
 
-      {/* 只有当总页数大于1时显示分页 */}
       {totalPages > 1 && (
         <CustomPagination
           totalPages={totalPages}
@@ -110,6 +125,23 @@ export function PortfolioList({ items, onSelectItem }: PortfolioListProps) {
           className="mt-10"
         />
       )}
+
+      {/* Dialog */}
+      <Dialog
+        open={!!dialogOpenForPortfolioId}
+        onOpenChange={(open) => !open && setDialogOpenForPortfolioId(null)}
+      >
+        {selectedPortfolioForDialog && (
+          <DialogContent className="dialog-content">
+            <DialogHeader className="dialog-header">
+              <DialogTitle>{selectedPortfolioForDialog.title}</DialogTitle>
+            </DialogHeader>
+            <ScrollArea className="dialog-body">
+              <PortfolioDetail item={selectedPortfolioForDialog} />
+            </ScrollArea>
+          </DialogContent>
+        )}
+      </Dialog>
     </div>
   );
 }
